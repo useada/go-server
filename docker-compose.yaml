@@ -1,0 +1,19 @@
+version: '2.0'
+services:
+  api:
+    container_name: 'funnylink'
+    build: '.'
+    ports:
+      - '9002:9002'
+    volumes:
+      - '.:/app/'
+    links:
+      - mongo
+    environment:
+      MONGODB_URL: mongodb://mongo:27017/funnylink
+
+  mongo:
+    image: 'mongo:latest'
+    container_name: 'mongo'
+    ports:
+      - '27010:27017'
