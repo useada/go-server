@@ -12,11 +12,12 @@ const (
 
 // Link model
 type Link struct {
-	ID        bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
+	ID        bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
 	Name      string        `json:"name" binding:"required" bson:"name"`
 	Url       string        `json:"url" binding:"required" bson:"url"`
 	Desc      string        `json:"desc" bson:"desc"`
 	ImgName   string        `json:"imgName" bson:"imgName"`
+	Tags      []string      `json:"tags" bson:"tags"`
 	CreatedBy bson.ObjectId `json:"createdBy,omitempty" bson:"createdBy,omitempty"`
 	CreatedAt time.Time     `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
 }

@@ -17,9 +17,13 @@ import (
 func GetLinks(c *gin.Context) {
 	db := c.MustGet("db").(*mgo.Database)
 
-	category := c.DefaultQuery("category", "recommend")
+	tag := c.DefaultQuery("tag", "")
 	indexStr := c.Query("index")
 	countStr := c.Query("count")
+
+	if tag == "recommend" {
+		tag = ""
+	}
 
 	index, err := strconv.Atoi(indexStr)
 	if err != nil {
@@ -31,7 +35,15 @@ func GetLinks(c *gin.Context) {
 		count = 10
 	}
 
-	if category != "recommend" {
+	query := bson.M{}
+	if tag != "" {
+		query = bson.M{
+			"tags": tag,
+		}
+	}
+
+	linksCount, err := db.C(models.CollectionLink).Find(query).Count()
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": 500,
 			"msg":    err.Error(),
@@ -40,7 +52,7 @@ func GetLinks(c *gin.Context) {
 	}
 
 	var links []models.Link
-	err = db.C(models.CollectionLink).Find(nil).Skip(index).Limit(count).All(&links)
+	err = db.C(models.CollectionLink).Find(query).Skip(index).Limit(count).All(&links)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": 500,
@@ -60,9 +72,12 @@ func GetLinks(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"status": 200,
+		"status": 0,
 		"msg":    "Success",
-		"data":   resultLinks,
+		"data": gin.H{
+			"count": linksCount,
+			"links": resultLinks,
+		},
 	})
 }
 
@@ -81,7 +96,7 @@ func ListLinks(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"status": 200,
+		"status": 0,
 		"msg":    "Success",
 		"data":   links,
 	})
@@ -105,7 +120,7 @@ func GetLink(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"status": 200,
+		"status": 0,
 		"msg":    "Success",
 		"data":   link,
 	})
@@ -136,7 +151,43 @@ func CreateLink(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"status": 200,
+		"status": 0,
+		"msg":    "Success",
+	})
+}
+
+// Create a links
+func CreateLinks(c *gin.Context) {
+	db := c.MustGet("db").(*mgo.Database)
+
+	var links []models.Link
+	err := c.BindJSON(&links)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"msg":    err.Error(),
+		})
+		return
+	}
+
+	var pLinks []interface{}
+
+	for i, _ := range links {
+		links[i].CreatedAt = time.Now()
+		pLinks = append(pLinks, &links[i])
+	}
+
+	err = db.C(models.CollectionLink).Insert(pLinks...)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"msg":    err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": 0,
 		"msg":    "Success",
 	})
 }
@@ -178,7 +229,7 @@ func DeleteLink(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"status": 200,
+		"status": 0,
 		"msg":    "Success",
 	})
 }
@@ -213,7 +264,7 @@ func UpdateLink(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"status": 200,
+		"status": 0,
 		"msg":    "Success",
 		"data":   link,
 	})

@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"serve/models"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -48,6 +50,42 @@ func JWTAuth() gin.HandlerFunc {
 		}
 		// 继续交由下一个路由处理,并将解析出的信息传递下去
 		c.Set("claims", claims)
+	}
+}
+
+// JWTAuth 中间件，检查token
+func JWTAdmin() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		claims := c.MustGet("claims").(*CustomClaims)
+
+		db := c.MustGet("db").(*mgo.Database)
+
+		var user models.User
+		query := bson.M{
+			"_id": claims.ID,
+		}
+
+		err := db.C(models.CollectionUser).
+			Find(query).
+			One(&user)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": 500,
+				"msg":    err.Error(),
+			})
+			return
+		}
+
+		if user.Role != models.UserRoleAdmin {
+			c.JSON(http.StatusForbidden, gin.H{
+				"status": -1,
+				"msg":    "没有管理权限",
+			})
+
+			c.Abort()
+			return
+		}
 	}
 }
 

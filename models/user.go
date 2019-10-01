@@ -9,15 +9,17 @@ import (
 const (
 	// CollectionUser holds the name of the user collection
 	CollectionUser = "users"
+
+	UserRoleAdmin = 9
 )
 
 // User model
 type User struct {
-	ID    bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
+	ID    bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
 	Email string        `json:"email" binding:"required" bson:"email"`
-	// 0: admin 1: organization 2: customer
+	// 9: admin 0: common 1: organization 2: customer
 	Type int `json:"type" bson:"type"`
-	// 0: admin 1: user
+	// 9: admin 0: user
 	Role             int           `json:"role" bson:"role"`
 	Password         string        `json:"password" binding:"required" bson:"password"`
 	Phone            string        `json:"phone,omitempty" bson:"phone,omitempty"`

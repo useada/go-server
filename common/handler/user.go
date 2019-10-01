@@ -103,6 +103,8 @@ func CreateUser(c *gin.Context) {
 		})
 		return
 	}
+
+	user.Role = 0
 	user.CreatedAt = time.Now()
 
 	err = db.C(models.CollectionUser).Insert(user)
@@ -211,6 +213,8 @@ func UpdateUser(c *gin.Context) {
 		})
 		return
 	}
+
+	user.Role = 0
 
 	// 查找原来的文档
 	query := bson.M{
