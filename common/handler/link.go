@@ -42,6 +42,8 @@ func GetLinks(c *gin.Context) {
 		}
 	}
 
+	sort := "-rating"
+
 	linksCount, err := db.C(models.CollectionLink).Find(query).Count()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -52,7 +54,7 @@ func GetLinks(c *gin.Context) {
 	}
 
 	var links []models.Link
-	err = db.C(models.CollectionLink).Find(query).Skip(index).Limit(count).All(&links)
+	err = db.C(models.CollectionLink).Find(query).Sort(sort).Skip(index).Limit(count).All(&links)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": 500,
@@ -66,6 +68,14 @@ func GetLinks(c *gin.Context) {
 	for _, v := range links {
 		resultLink := ResultLink{}
 		resultLink.Link = v
+
+		if resultLink.Title == "" {
+			resultLink.Title = v.Name
+		}
+		if resultLink.Content == "" {
+			resultLink.Content = v.Desc
+		}
+
 		resultLink.ImgUrl = calcImgUrl(v.ImgName)
 
 		resultLinks = append(resultLinks, resultLink)
