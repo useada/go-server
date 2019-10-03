@@ -270,6 +270,31 @@ func UpdateLink(c *gin.Context) {
 	})
 }
 
+// Open link
+func OpenLink(c *gin.Context) {
+	db := c.MustGet("db").(*mgo.Database)
+
+	// 查找原来的文档
+	query := bson.M{
+		"_id": bson.ObjectIdHex(c.Param("_id")),
+	}
+
+	err := db.C(models.CollectionLink).Update(query,
+		bson.M{"$inc": bson.M{"openCount": 1}})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"msg":    err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": 0,
+		"msg":    "Success",
+	})
+}
+
 type ResultLink struct {
 	models.Link
 	ImgUrl string `json:"imgUrl"`

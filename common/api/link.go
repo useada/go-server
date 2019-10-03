@@ -12,6 +12,7 @@ func GetLinkAPI(engine *gin.Engine) {
 
 	v1.GET("/links", handler.GetLinks)
 	v1.GET("/link/:_id", handler.GetLink)
+	v1.POST("/open/link/:_id", handler.OpenLink)
 
 	v1.Use(middleware.JWTAuth())
 	v1.Use(middleware.JWTAdmin())

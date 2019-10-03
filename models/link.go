@@ -18,6 +18,7 @@ type Link struct {
 	Desc      string        `json:"desc" bson:"desc"`
 	ImgName   string        `json:"imgName" bson:"imgName"`
 	Tags      []string      `json:"tags" bson:"tags"`
+	OpenCount int           `json:"openCount" bson:"openCount"`
 	CreatedBy bson.ObjectId `json:"createdBy,omitempty" bson:"createdBy,omitempty"`
 	CreatedAt time.Time     `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
 }
