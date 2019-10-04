@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
@@ -46,6 +47,13 @@ func GetLinks(c *gin.Context) {
 
 	linksCount, err := db.C(models.CollectionLink).Find(query).Count()
 	if err != nil {
+		log.WithFields(log.Fields{
+			"tag":   tag,
+			"index": index,
+			"count": count,
+			"err":   err,
+		}).Error("open db error")
+
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": 500,
 			"msg":    err.Error(),
@@ -129,10 +137,22 @@ func GetLink(c *gin.Context) {
 		return
 	}
 
+	resultLink := ResultLink{}
+	resultLink.Link = link
+
+	if resultLink.Title == "" {
+		resultLink.Title = link.Name
+	}
+	if resultLink.Content == "" {
+		resultLink.Content = link.Desc
+	}
+
+	resultLink.ImgUrl = calcImgUrl(link.ImgName)
+
 	c.JSON(http.StatusOK, gin.H{
 		"status": 0,
 		"msg":    "Success",
-		"data":   link,
+		"data":   resultLink,
 	})
 }
 
