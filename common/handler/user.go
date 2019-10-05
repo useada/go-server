@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"math/rand"
 	"net/http"
 	"strings"
 	"time"
@@ -367,4 +368,34 @@ func generateToken(c *gin.Context, user models.User) {
 		"data":   data,
 	})
 	return
+}
+
+func AnonymousUser(c *gin.Context) {
+	db := c.MustGet("db").(*mgo.Database)
+
+	index := int(rand.Int31n(30000))
+	count := 1
+
+	query := bson.M{}
+
+	var idiom models.Idiom
+	err := db.C(models.CollectionIdiom).Find(query).Skip(index).Limit(count).One(&idiom)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"msg":    err.Error(),
+		})
+		return
+	}
+
+	type AnonymousUser struct {
+		Nickname string `json:"nickname" bson:"nickname"`
+	}
+	au := AnonymousUser{Nickname: idiom.Word}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": 0,
+		"msg":    "Success",
+		"data":   au,
+	})
 }

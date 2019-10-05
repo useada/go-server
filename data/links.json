@@ -1,0 +1,374 @@
+[
+ {
+    "name": "链接买卖网",
+    "desc": "友情链接交易平台，友情链接网为广大客户提供优质的友链，优质友情链接买卖交易第一平台。",
+    "url": "http://www.fuyinsh.com/",
+    "imgName": "链接买卖网.png"
+  },
+   {
+    "name": "小专栏",
+    "desc": "小专栏是一个专业人士的创作知识社区，目前主要有专栏和小书两个模块，旨在为一些在某个领域有深度研究的小伙伴提供的写作平台，专栏和小书都需要进行申请，通过审核后即可开始您的创作。",
+    "url": "https://xiaozhuanlan.com/",
+    "imgName": "小专栏.png"
+  },
+   {
+    "name": "有趣的",
+    "desc": "欢迎来到 有趣的！这里是一个简单、温暖的小社区。",
+    "url": "https://youqu.de/",
+    "imgName": "有趣的.png"
+  },
+   {
+    "name": "搜韵网",
+    "desc": "一个很有趣的诗词类网站， 收录诗词79万首，还创造性地提供了『唐宋文学编年地图』和『历代诗人地域分布（ 可查看诗人一生的轨迹 ）』。",
+    "url": "https://sou-yun.cn/index.aspx",
+    "imgName": "搜韵网.png"
+  },
+   {
+    "name": "丝绸之路地理信息系统",
+    "desc": "可以在线观看丝绸之路的历史线路，以及三维展示丝绸之路的盛况。",
+    "url": "http://silkroad.fudan.edu.cn",
+    "imgName": "丝绸之路地理信息系统.png"
+  },
+   {
+    "name": "全景故宫",
+    "desc": "360度展现故宫的全貌，实现网上游览故宫。还有线下游览故宫的门票、时间等介绍。",
+    "url": "http://mob.visualbusiness.cn/gugong-pc/index.html",
+    "imgName": "全景故宫.png"
+  },
+   {
+    "name": "台风路径实时查询",
+    "desc": "浙江水利厅主办的网站，可以预测台风路径，不同颜色的线路是不同国家或地区的预测结果。",
+    "url": "http://typhoon.zjwater.gov.cn/wap.htm",
+    "imgName": "台风路径实时查询.png"
+  },
+   {
+    "name": "Gallerix",
+    "desc": "收集了从文艺复兴时期开始，16万多幅世界著名画家的作品，无水印，大小适中；从这个网站上还可以在线浏览二十余家全球著名博物馆的馆藏画作。",
+    "url": "https://gallerix.asia/",
+    "imgName": "Gallerix.png"
+  },
+   {
+    "name": "Models模特网",
+    "desc": "可以看到全球模特的各种排名，而且每个模特都有介绍页，会介绍模特的信息，还有模特拍的杂志和时尚走秀等内容。",
+    "url": "https://models.com",
+    "imgName": "Models模特网.png"
+  },
+   {
+    "name": "Clipping Magic",
+    "desc": "超级简便实用的在线抠图网站。简单易用，只要划几笔就抠出来了，救急完全OK！",
+    "url": "https://zh.clippingmagic.com",
+    "imgName": "ClippingMagic.png"
+  },
+   {
+    "name": "100,000Stars",
+    "desc": "打开网站，整个银河系便出现在你眼前，按鼠标左键拖动旋转角度，滑动鼠标滚轮可以放大缩小，点击左上角的播放键，它会带你漫游壮丽的银河系！",
+    "url": "http://stars.chromeexperiments.com/",
+    "imgName": "100000Stars.png"
+  },
+   {
+    "name": "忧郁小王子",
+    "desc": "关于抑郁症的一个网站，情绪低落的话也可以看看，整个网站设计都很温馨，并且很实用。",
+    "url": "http://www.depression.edu.hk/gb/home.html",
+    "imgName": "忧郁小王子.png"
+  },
+   {
+    "name": "VirtOcean",
+    "desc": "在线白噪音，主要模拟海洋的声音，视觉效果也不错，还能听到海豚、海螺、海鸥等动物的声音。",
+    "url": "http://virtocean.com/",
+    "imgName": "VirtOcean.png"
+  },
+   {
+    "name": "smallpdf",
+    "desc": "全世界比较著名的在线 pdf 处理工具，日ip 160多万。",
+    "url": "https://smallpdf.com/",
+    "imgName": "smallpdf.png"
+  },
+   {
+    "name": "nginxconfig",
+    "desc": "非常好用的在线生成nginx配置网站。",
+    "url": "https://nginxconfig.io",
+    "imgName": "nginxconfig.png"
+  },
+   {
+    "name": "100font",
+    "desc": "一个专门收集整理 ❝免费商用字体❞ 的网站",
+    "url": "https://www.100font.com/",
+    "imgName": "100font.png"
+  },
+   {
+    "name": "processon",
+    "desc": "ProcessOn 支持流程图、思维导图、原型图、UML、网络拓扑图、组织结构图等。",
+    "url": "https://www.processon.com/",
+    "imgName": "processon.png"
+  },
+   {
+    "name": "PDF在线工具",
+    "desc": "国产PDF在线工具，提供多种格式在线互转，以及常用的PDF处理。",
+    "url": "https://pdf.wps.cn/",
+    "imgName": "PDF在线工具.png"
+  },
+   {
+    "name": "magicsketchpad",
+    "desc": "略微恶搞的小应用，网站可以在线和智能AI合作画画，你只要随意画一笔，剩下的就交给智能AI自动帮你画完。。。",
+    "url": "http://magic-sketchpad.glitch.me/",
+    "imgName": "magicsketchpad.png"
+  },
+   {
+    "name": "thisresumedoesnotexist",
+    "desc": "网站可以在线生成虚拟简历，所有的信息都是由AI程序自动生成的，像模像样，跟真的拟的！没准不太会写简历的兄弟们可以参考一下。。哈哈",
+    "url": "https://thisresumedoesnotexist.com",
+    "imgName": "thisresumedoesnotexist.png"
+  },
+   {
+    "name": "Adventure Mach",
+    "desc": "需要带上耳机哦！网站可以在线体验DJ打碟，操作极其简单，用移动设备访问的话同样可以进行触摸操控！",
+    "url": "https://www.madeon.fr/adventuremachine/",
+    "imgName": "AdventureMach.png"
+  },
+   {
+    "name": "毒鸡汤",
+    "desc": "满满的负能量。。。网站随机展示一句扎心的段子，越看越让人觉得生活没什么希望，想要给自己添点堵，那就来吧！",
+    "url": "http://www.nows.fun/",
+    "imgName": "毒鸡汤.png"
+  },
+   {
+    "name": "Logoly Pro",
+    "desc": "网站可以在线生成LOGO，比如本网站的。。。并且，代码开源哦",
+    "url": "https://logoly.pro/#/",
+    "imgName": "logolypro.png"
+  },
+   {
+    "name": "Penint",
+    "desc": "一个恶搞网站，在画板上画什么最后都会变成雕的样子。。。画大点就是大雕，画小点就是小雕，所以咱只敢放了个空白图，画雕的事就交给你了，少年！",
+    "url": "http://seoi.net/penint/",
+    "imgName": "Penint.png"
+  },
+   {
+    "name": "thispersondoesnotexist",
+    "desc": "很专业的智能AI网站，网站会随机展示由AI智能生成的人像照片，通过对庞大的真实人像数据的学习，生成出逼真的、不存在的人。。。",
+    "url": "https://thispersondoesnotexist.com/",
+    "imgName": "thispersondoesnotexist.png"
+  },
+   {
+    "name": "vim-adventures",
+    "desc": "网站可以用玩小游戏的方式来练习vim编辑器的快捷键操作",
+    "url": "https://vim-adventures.com/",
+    "imgName": "vim-adventures.png"
+  },
+   {
+    "name": "yesno",
+    "desc": "选择困难症必备！网站可以帮你果断的做出Yes或No的选择，当你遇到不是那么重要的选择问题，可以试试这个！",
+    "url": "https://yesno.wtf/",
+    "imgName": "yesno.png"
+  },
+   {
+    "name": "colornames",
+    "desc": "RGB色彩显示方案想必大家应该都很熟悉，这个网站的目的就是要为每一个RGB颜色都起上名字。没错，那就是256*256*256也就是要给16777216个颜色起名。网站是英文的，不过就算英语母语用户肯定也得在这个数量上用尽词汇量。",
+    "url": "https://colornames.org/",
+    "imgName": "colornames.png"
+  },
+   {
+    "name": "cmd.to",
+    "desc": "相信爱好酷站的朋友应该会有不少极客，热衷特别新鲜或者特别怀旧的东西。这个cmd.to就是模仿了控制台风格，不过它可以用命令来听歌，看新闻，玩游戏等，CLI爱好者会喜欢这个。",
+    "url": "https://cmd.to/help",
+    "imgName": "cmd.to.png"
+  },
+   {
+    "name": "noice.lol",
+    "desc": "当有什么东西或者事物nice到了足够的水平，它就上升到了noice。这个网站会循环播放来自迈克尔·罗森的这段相关的魔性视频，如果你的好友发了什么特别酷炫的东西，可以把这个网站发回去来作为评价。",
+    "url": "https://noice.lol/",
+    "imgName": "noice.lol.png"
+  },
+   {
+    "name": "buttsss",
+    "desc": "这个网站收录了众多非常圆的屁股，网站的站长甚至还很贴心的提供了下载全部插图功能，可以用在微信或者QQ里随时随地的污别人一下。",
+    "url": "https://www.buttsss.com/",
+    "imgName": "buttsss.png"
+  },
+   {
+    "name": "蜜蜂剪辑",
+    "desc": "超实用的工具！网站提供了多项视频编辑在线工具，实时在线处理，同时也支持手机端操作，相当方便！",
+    "url": "https://beecut.cn/online-video-editor",
+    "imgName": "蜜蜂剪辑.png"
+  },
+   {
+    "name": "generative.fm",
+    "desc": "这个网站点开后有多种电台可供选择，而且最大的特点就是在于这里的音乐都不是人工制作出来的，而是由另一套独立的系统自动生成出来的音乐，有点AI的意思。这个网站另外还提供了生成音乐的功能，非常方便。",
+    "url": "https://generative.fm/",
+    "imgName": "generative.fm.png"
+  },
+   {
+    "name": "standardguitar",
+    "desc": "一个在线互动的吉他教学的网站，有三种不同的教学方法：和弦、歌曲和音阶。网站通过展示和弦和音阶，以及弹奏Spotify上的歌曲来让用户学习吉他和弦。解析Spotify的歌曲背后用到了一些黑科技，相当推荐给想学吉他的朋友！",
+    "url": "https://www.standardguitar.com",
+    "imgName": "standardguitar.png"
+  },
+   {
+    "name": "微词云",
+    "desc": "微词云是一款非常实用、简单的在线文字云、在线词云生成器，相对于其他产品，我们的产品功能更加强大，无论您是设计人员、运营人员、学生、数据分析师，都可以很简单的做出令人眼前一亮的文字云图。",
+    "url": "https://www.minitagcloud.cn/",
+    "imgName": "微词云.png"
+  },
+   {
+    "name": "obsoletemedia",
+    "desc": "这个网站专门收集展示了人们曾经或者仍在使用的媒体格式，可以从中了解媒介的进化史，并了解罕为人知或者短命的格式。网站里甚至还收录了一些来自19世纪的格式，很有沧桑感。",
+    "url": "https://obsoletemedia.org/",
+    "imgName": "obsoletemedia.png"
+  },
+   {
+    "name": "发现中国",
+    "desc": "这是个值得收藏的网站，它可以在线查看中国历史上有记载的中国古地图，并结合google地图，重现了古代地图在现在的位置！",
+    "url": "https://www.ageeye.cn/",
+    "imgName": "发现中国.png"
+  },
+   {
+    "name": "mikutap",
+    "desc": "动感音乐互动DJ体验，随意按下任意键，你可以创作意想不到的二次元音乐。。强烈推荐",
+    "url": "https://aidn.jp/mikutap/",
+    "imgName": "mikutap.png"
+  },
+   {
+    "name": "Street Mix",
+    "desc": "城市道路建设离不开路面规划设计，这个网站提供一种简单便捷的道路剖面设计的模板，只需拖动道路元素，即可组合出各种道路剖面图，从事道路设计或者爱好道路规划的小伙伴可以快来试试，发挥脑洞设计出独特合理的道路设计剖面图吧！",
+    "url": "https://streetmix.net",
+    "imgName": "streetmix.png"
+  },
+   {
+    "name": "minecraft",
+    "desc": "Minecraft我的世界10周年推出的2009还原版，网站可以在线体验Minecraft我的世界，虽然是网页版，但画面还是相当流畅的，体验极好！",
+    "url": "https://classic.minecraft.net",
+    "imgName": "classic.minecraft.net.png"
+  },
+   {
+    "name": "avengethem",
+    "desc": "有日子没介绍图片合成类的趣站了，今天的这个网站可以在线智能合成3D人脸到漫威复仇者的身上，并生成GIF动画下载或分享！",
+    "url": "https://avengethem.com/",
+    "imgName": "avengethem.png"
+  },
+   {
+    "name": "Tetr Js",
+    "desc": "喜欢俄罗斯方块游戏的朋友可以收藏一下，这就是个俄罗斯方块PLUS，各种模式的挑战，让你彻底爱上这款游戏！",
+    "url": "http://farter.cn/tetr.js/",
+    "imgName": "tetr.js.png"
+  },
+   {
+    "name": "Cantunsee Space",
+    "desc": "这个网站相当好玩，它可以在线练习对手机UI界面设计中细节的把握，通过对两个类似设计的选择，选出正确的设计并得分！",
+    "url": "https://cantunsee.space/",
+    "imgName": "cantunsee.space.png"
+  },
+   {
+    "name": "Colourise 老照片着色",
+    "desc": "这是新加坡科技局一个三人小组，基于GAN而开发的一个给老照片着色的项目，该网站可以给黑白相片上色，使其重焕生机。小编测试了一下，人像还原效果较好，但颜色偏黄，建筑风景还原还有待改善。",
+    "url": "https://colourise.sg/",
+    "imgName": "colourise.sg.png"
+  },
+   {
+    "name": "Captionbot Ai",
+    "desc": "很有意思的网站，它可以在线识别上传图片里的内容，虽然不是百分百的准确，但还是可以给你带来很神奇的感觉！",
+    "url": "https://www.captionbot.ai/",
+    "imgName": "captionbot.ai.png"
+  },
+   {
+    "name": "Remove Bg",
+    "desc": "送给不会作图软件的你！网站可以全自动智能在线抠图，你要做的就是上传你的照片，但网站只提供用于二次创作的透明背景图片，后续的合成还需要你来完成！",
+    "url": "https://www.remove.bg",
+    "imgName": "remove.bg.png"
+  },
+   {
+    "name": "David Li",
+    "desc": "体验网页带来的新奇效果，网站集合了几个很棒的鼠标互动作品，相信一会定给你不一样的感觉，试试吧！",
+    "url": "http://david.li/",
+    "imgName": "david.li.png"
+  },
+   {
+    "name": "Ilove Works",
+    "desc": "这是一份多么好的工作啊，站长会想制作出这样一个热血打工仔的主页。。。国产趣站，值得介绍给大家！",
+    "url": "https://ilove.works/",
+    "imgName": "ilove.works.png"
+  },
+   {
+    "name": "designcap.com",
+    "desc": "简单而实用的网站，它可以在线制作心仪的海报或传单，通过模板可以快速创建简约、美观的作品，并可以下载印刷级清晰度的图片文件！",
+    "url": "https://www.designcap.com/",
+    "imgName": "designcap.com.png"
+  },
+   {
+    "name": "taiko.bui.pm",
+    "desc": "很值得一玩的游戏！官方出的太鼓达人网页版，还原度很高，虽然没有其它平台上那样的流畅画面，好在曲目很多，快去体验一下吧！",
+    "url": "https://taiko.bui.pm/",
+    "imgName": "taiko.bui.pm.png"
+  },
+   {
+    "name": "timelineofearth.com",
+    "desc": "很涨姿势的网站哦！它向我们展示了地球从无到有的演化过程，并没有用冗长的文字来说明，而是用了简单明了的图标，看起来直观易懂！",
+    "url": "http://timelineofearth.com/",
+    "imgName": "timelineofearth.com.png"
+  },
+   {
+    "name": "bongo.cat",
+    "desc": "最近很火的卡通形像，Bongo Cat手鼓猫的官方网站，虽然使用的乐器不如各种神视频里的全，但经典的手鼓还是有的！",
+    "url": "https://bongo.cat/",
+    "imgName": "bongo.cat.png"
+  },
+   {
+    "name": "squoosh.app",
+    "desc": "谷歌大佬出的作品！支持在线压缩图片，同时还支持尺寸、格式的转换，实时观看压缩对比效果，用起来很方便！",
+    "url": "https://squoosh.app/",
+    "imgName": "squoosh.app.png"
+  },
+   {
+    "name": "piano-genie.glitch.me",
+    "desc": "对于外行来说，这个网站也是没有卵用的。。。它可以帮你完成真实钢琴很难完成的技巧，如果你学过钢琴的话，这个网站可以玩玩！",
+    "url": "https://piano-genie.glitch.me/",
+    "imgName": "piano-genie.glitch.me.png"
+  },
+   {
+    "name": "yorg.io",
+    "desc": "之前大家已经接触很多io游戏了，这是一款塔防类io游戏， 在游戏中放置主基地，采集资源，建造工事，升级技能，阻止怪物摧毁基地，每隔几个回合还会有Boos出现。一款十分耐玩，消磨时间的小游戏，游戏官方提供了教程，还可以和全世界的小伙伴进行分数排名。",
+    "url": "https://yorg.io/",
+    "imgName": "yorg.io.png"
+  },
+   {
+    "name": "jikipedia.com",
+    "desc": "如果你突然看到网络上的什么梗没明白，可以来这个网站查一下。。。它收录了几乎全部网络上流行的词条梗，基本上看解释都能明白了！",
+    "url": "https://jikipedia.com/",
+    "imgName": "jikipedia.com.png"
+  },
+   {
+    "name": "beautifulcarrot.com",
+    "desc": "说不定什么时候会用上的小工具。。。网站可以在线生成仿真度极高的手写体文稿，支持生成PDF矢量文档，打印出来后和真的手写体一样。。。",
+    "url": "http://www.beautifulcarrot.com/",
+    "imgName": "beautifulcarrot.com.png"
+  },
+   {
+    "name": "igfonts.io",
+    "desc": "很方便的小工具，网站可以在线生成Instagram风格字体，可以复制粘贴至各种平台的编辑器中，💋😾 使用起来非常方便！ 😝💝",
+    "url": "https://igfonts.io/",
+    "imgName": "igfonts.io.png"
+  },
+   {
+    "name": "zty.pe",
+    "desc": "很带感的打字练习工具！即可以练习打字，还可以体验超棒的游戏特效，别小看它，玩起来还挺难的，来试试吧！",
+    "url": "https://zty.pe/",
+    "imgName": "zty.pe.png"
+  },
+   {
+    "name": "weneedwards.com",
+    "desc": "Dota 2玩家不妨试试这个网站怎么样，它可以在线训练卡尔搓招和屠夫钩子，针对性的训练，也许会对你有所帮助！",
+    "url": "http://weneedwards.com/",
+    "imgName": "weneedwards.com.png"
+  },
+   {
+    "name": "neave.com",
+    "desc": "最近也是越来越懒了，本来作者已经将所有的小游戏赋予了独立域名，应该每一个都介绍一下的，但最终还是决定把这个互动性很好的小游戏作品集一招介绍给大家吧！",
+    "url": "https://neave.com/",
+    "imgName": "neave.com.png"
+  },
+   {
+    "name": "yumy.io",
+    "desc": "不论手机版还是网页版，这款游戏的原作是Donut County。。。网站可以在线多人联机黑洞小游戏，玩法简单，上手很快，不错！",
+    "url": "https://yumy.io/",
+    "imgName": "yumy.io.png"
+  }
+]
