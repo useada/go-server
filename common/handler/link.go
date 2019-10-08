@@ -84,6 +84,10 @@ func GetLinks(c *gin.Context) {
 			resultLink.Content = v.Desc
 		}
 
+		if resultLink.Author.Nickname == "" {
+			resultLink.Author.Nickname = "李白"
+		}
+
 		resultLink.ImgUrl = calcImgUrl(v.ImgName)
 
 		resultLinks = append(resultLinks, resultLink)

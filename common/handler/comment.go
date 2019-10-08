@@ -96,6 +96,19 @@ func CreateComment(c *gin.Context) {
 		return
 	}
 
+	var link models.Link
+	err = db.C(models.CollectionLink).
+		FindId(comment.ReferTo).
+		One(&link)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"msg":    err.Error(),
+		})
+		return
+	}
+
 	comment.Type = 1
 	comment.CreatedAt = time.Now()
 
@@ -110,8 +123,18 @@ func CreateComment(c *gin.Context) {
 		return
 	}
 
+	var recentComments []models.Comment
+	recentComments = append(recentComments, comment)
+
+	for k, v := range link.RecentComments {
+		if k < 2 {
+			recentComments = append(recentComments, v)
+		}
+	}
+	link.RecentComments = recentComments
+
 	err = db.C(models.CollectionLink).Update(bson.M{"_id": comment.ReferTo},
-		bson.M{"$inc": bson.M{"commentCount": 1}})
+		bson.M{"$inc": bson.M{"commentCount": 1}, "$set": bson.M{"recentComments": recentComments}})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": 500,

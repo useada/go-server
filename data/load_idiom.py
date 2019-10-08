@@ -11,7 +11,7 @@ class JsonToMongo(object):
 
     # 读取json文件
     def __open_file(self):
-        self.file = open('idiom.json', 'r')
+        self.file = open('idiom.json', 'r', encoding='utf-8')
         uri = "mongodb://%s:%s@%s" % (
             'root', '123456', self.host)        
         # 创建mongodb客户端
