@@ -1,9 +1,10 @@
 package handler
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"math/rand"
 	"net/http"
-	"strings"
 	"time"
 
 	"gopkg.in/mgo.v2"
@@ -60,43 +61,18 @@ func GetUser(c *gin.Context) {
 	})
 }
 
-// Get a user from email
-func GetEmail(c *gin.Context) {
-	db := c.MustGet("db").(*mgo.Database)
-	var user models.User
-
-	err := db.C(models.CollectionUser).
-		Find(bson.M{"email": c.Param("email")}).
-		One(&user)
-	if err != nil {
-		if !strings.Contains(err.Error(), `not found`) {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"status": 500,
-				"msg":    err.Error(),
-			})
-			return
-		} else {
-			c.JSON(http.StatusOK, gin.H{
-				"status": 200,
-				"msg":    "not found",
-			})
-			return
-		}
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"status": 200,
-		"msg":    "Success",
-		"data":   user,
-	})
-}
-
 // Create a user
 func CreateUser(c *gin.Context) {
 	db := c.MustGet("db").(*mgo.Database)
 
-	var user models.User
-	err := c.BindJSON(&user)
+	var userData struct {
+		Email    string `json:"email" binding:"required" bson:"email"`
+		Password string `json:"password" binding:"required" bson:"password"`
+		Phone    string `json:"phone,omitempty" bson:"phone,omitempty"`
+		NickName string `json:"nickName,omitempty" binding:"required" bson:"nickName,omitempty"`
+		Profile  string `json:"profile,omitempty" bson:"profile,omitempty"`
+	}
+	err := c.BindJSON(&userData)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": 500,
@@ -105,8 +81,43 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	user.Role = 0
+	oldUser, err := models.GetUserByEmail(db, userData.Email)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"msg":    err.Error(),
+		})
+		return
+	}
+
+	if oldUser != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"status": 500,
+			"msg":    "邮箱已存在，你可以直接登录",
+		})
+		return
+	}
+
+	var user models.User
+
+	user.Email = userData.Email
+	user.Password = userData.Password
+	user.Phone = userData.Phone
+	user.NickName = userData.NickName
+	user.Profile = userData.Profile
+
+	user.Role = models.UserRoleRegistered
 	user.CreatedAt = time.Now()
+
+	h := md5.New()
+	h.Write([]byte(bson.NewObjectId().Hex()))
+	cipherStr := h.Sum(nil)
+	user.Salt = hex.EncodeToString(cipherStr)
+
+	h.Reset()
+	h.Write([]byte(bson.NewObjectId().Hex()))
+	cipherStr = h.Sum(nil)
+	user.CheckCode = hex.EncodeToString(cipherStr)
 
 	err = db.C(models.CollectionUser).Insert(user)
 	if err != nil {
@@ -398,4 +409,37 @@ func AnonymousUser(c *gin.Context) {
 		"msg":    "Success",
 		"data":   au,
 	})
+}
+
+func CheckUser(c *gin.Context) {
+	db := c.MustGet("db").(*mgo.Database)
+
+	checkCode := c.Param("sn")
+	if checkCode == "" {
+		c.Redirect(http.StatusPermanentRedirect, "/sn/error")
+		return
+	}
+
+	var user models.User
+	query := bson.M{
+		"checkCode": checkCode,
+	}
+
+	err := db.C(models.CollectionUser).
+		Find(query).
+		One(&user)
+
+	if err != nil {
+		c.Redirect(http.StatusPermanentRedirect, "/sn/error")
+		return
+	}
+
+	err = db.C(models.CollectionUser).Update(bson.M{"_id": user.ID},
+		bson.M{"$set": bson.M{"role": models.UserRoleChecked}})
+	if err != nil {
+		c.Redirect(http.StatusPermanentRedirect, "/sn/error")
+		return
+	}
+
+	c.Redirect(http.StatusPermanentRedirect, "/user-profile")
 }

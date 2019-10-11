@@ -1,8 +1,10 @@
 package models
 
 import (
+	"strings"
 	"time"
 
+	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -10,20 +12,24 @@ const (
 	// CollectionUser holds the name of the user collection
 	CollectionUser = "users"
 
-	UserRoleAdmin = 9
+	UserRoleAdmin      = 9
+	UserRoleRegistered = 1
+	UserRoleChecked    = 2
 )
 
 // User model
 type User struct {
 	ID    bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
-	Email string        `json:"email" binding:"required" bson:"email"`
+	Email string        `json:"email" bson:"email"`
 	// 9: admin 0: common 1: organization 2: customer
-	Type int `json:"type" bson:"type"`
-	// 9: admin 0: user
+	Type             int           `json:"type" bson:"type"`
 	Role             int           `json:"role" bson:"role"`
-	Password         string        `json:"password" binding:"required" bson:"password"`
+	Password         string        `json:"-" binding:"required" bson:"password"`
 	Phone            string        `json:"phone,omitempty" bson:"phone,omitempty"`
-	FullName         string        `json:"fullname,omitempty" bson:"fullname,omitempty"`
+	NickName         string        `json:"nickName,omitempty" bson:"nickName,omitempty"`
+	Profile          string        `json:"profile,omitempty" bson:"profile,omitempty"`
+	Salt             string        `json:"-" bson:"salt,omitempty"`
+	CheckCode        string        `json:"-" bson:"checkCode,omitempty"`
 	CreatedBy        bson.ObjectId `json:"createdBy,omitempty" bson:"createdBy,omitempty"`
 	CreatedAt        time.Time     `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
 	OrganizationID   bson.ObjectId `json:"organizationId,omitempty" bson:"organizationId,omitempty"`
@@ -41,4 +47,21 @@ type User struct {
 type LoginReq struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
+}
+
+func GetUserByEmail(db *mgo.Database, email string) (*User, error) {
+	var user User
+
+	err := db.C(CollectionUser).
+		Find(bson.M{"email": email}).
+		One(&user)
+	if err != nil {
+		if !strings.Contains(err.Error(), `not found`) {
+			return nil, err
+		} else {
+			return nil, nil
+		}
+	}
+
+	return &user, nil
 }
