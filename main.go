@@ -16,7 +16,9 @@ func main() {
 	log.SetOutput(os.Stdout)
 	log.SetFormatter(&log.TextFormatter{})
 
-	file, err := os.OpenFile("./logs/funny-link.log", os.O_CREATE|os.O_WRONLY, 0666)
+	log.SetLevel(log.DebugLevel)
+
+	file, err := os.OpenFile("./logs/funny-link.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err == nil {
 		log.SetOutput(file)
 	} else {

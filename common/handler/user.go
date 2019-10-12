@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"math/rand"
 	"net/http"
+	"serve/util"
 	"time"
 
 	"gopkg.in/mgo.v2"
@@ -151,8 +152,10 @@ func CreateUser(c *gin.Context) {
 		}
 	}
 
+	util.SendRegisterMail(user.Email, user.CheckCode)
+
 	c.JSON(http.StatusOK, gin.H{
-		"status": 200,
+		"status": 0,
 		"msg":    "Success",
 	})
 }
@@ -442,4 +445,45 @@ func CheckUser(c *gin.Context) {
 	}
 
 	c.Redirect(http.StatusPermanentRedirect, "/user-profile")
+}
+
+// Login 登录
+func SendCheckCode(c *gin.Context) {
+
+	var req struct {
+		Email string `json:"email" bson:"email"`
+	}
+
+	if c.BindJSON(&req) != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"status": -1,
+			"msg":    "Json parse error!",
+		})
+	}
+
+	db := c.MustGet("db").(*mgo.Database)
+
+	var user models.User
+	query := bson.M{
+		"email": req.Email,
+	}
+
+	err := db.C(models.CollectionUser).
+		Find(query).
+		One(&user)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"msg":    err.Error(),
+		})
+		return
+	}
+
+	util.SendRegisterMail(user.Email, user.CheckCode)
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": 0,
+		"msg":    "success!",
+	})
 }
