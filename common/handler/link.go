@@ -20,10 +20,22 @@ func GetLinks(c *gin.Context) {
 	db := c.MustGet("db").(*mgo.Database)
 
 	tag := c.DefaultQuery("tag", "")
+
+	// home, sns, admin
+	op := c.DefaultQuery("op", "home")
+
 	indexStr := c.Query("index")
 	countStr := c.Query("count")
 
-	if tag == "recommend" {
+	if tag == "" {
+		tag = "recommend"
+	}
+
+	if op == "sns" {
+		tag = ""
+	}
+
+	if op == "admin" {
 		tag = ""
 	}
 
@@ -36,6 +48,11 @@ func GetLinks(c *gin.Context) {
 	if err != nil {
 		count = 10
 	}
+
+	log.WithFields(log.Fields{
+		"tag": tag,
+		"op":  op,
+	}).Debug("query")
 
 	query := bson.M{}
 	if tag != "" {
@@ -189,6 +206,7 @@ func CreateLink(c *gin.Context) {
 
 	link.Author.ID = userID
 	link.Author.NickName = user.NickName
+	link.ID = bson.NewObjectId()
 
 	err = db.C(models.CollectionLink).Insert(link)
 	if err != nil {
@@ -202,6 +220,7 @@ func CreateLink(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status": 0,
 		"msg":    "Success",
+		"data":   link,
 	})
 }
 
@@ -350,5 +369,8 @@ type ResultLink struct {
 }
 
 func calcImgUrl(imgName string) string {
+	if imgName == "" {
+		return ""
+	}
 	return "http://static.d36.net/funnylink/links/image/png/" + imgName + "-small"
 }
