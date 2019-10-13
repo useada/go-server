@@ -11,7 +11,8 @@ const (
 )
 
 type Author struct {
-	Nickname string `json:"nickname" bson:"nickname"` // 昵称
+	ID       bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
+	NickName string        `json:"nickName" bson:"nickName"` // 昵称
 }
 
 type AtData struct {

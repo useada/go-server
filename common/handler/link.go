@@ -9,6 +9,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
+	myjwt "serve/middleware"
 	"serve/models"
 
 	"github.com/gin-gonic/gin"
@@ -84,8 +85,8 @@ func GetLinks(c *gin.Context) {
 			resultLink.Content = v.Desc
 		}
 
-		if resultLink.Author.Nickname == "" {
-			resultLink.Author.Nickname = "李白"
+		if resultLink.Author.NickName == "" {
+			resultLink.Author.NickName = "李白"
 		}
 
 		resultLink.ImgUrl = calcImgUrl(v.ImgName)
@@ -174,6 +175,20 @@ func CreateLink(c *gin.Context) {
 		return
 	}
 	link.CreatedAt = time.Now()
+
+	claims := c.MustGet("claims").(*myjwt.CustomClaims)
+	userID := claims.ID
+	user, err := models.GetUserByID(db, userID)
+	if err != nil || user == nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"msg":    err.Error(),
+		})
+		return
+	}
+
+	link.Author.ID = userID
+	link.Author.NickName = user.NickName
 
 	err = db.C(models.CollectionLink).Insert(link)
 	if err != nil {

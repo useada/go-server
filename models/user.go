@@ -70,3 +70,20 @@ func GetUserByEmail(db *mgo.Database, email string) (*User, error) {
 
 	return &user, nil
 }
+
+func GetUserByID(db *mgo.Database, id bson.ObjectId) (*User, error) {
+	var user User
+
+	err := db.C(CollectionUser).
+		Find(bson.M{"_id": id}).
+		One(&user)
+	if err != nil {
+		if !strings.Contains(err.Error(), `not found`) {
+			return nil, err
+		} else {
+			return nil, nil
+		}
+	}
+
+	return &user, nil
+}

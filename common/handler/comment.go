@@ -9,6 +9,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
+	myjwt "serve/middleware"
 	"serve/models"
 
 	"github.com/gin-gonic/gin"
@@ -96,6 +97,17 @@ func CreateComment(c *gin.Context) {
 		return
 	}
 
+	claims := c.MustGet("claims").(*myjwt.CustomClaims)
+	userID := claims.ID
+	user, err := models.GetUserByID(db, userID)
+	if err != nil || user == nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": 500,
+			"msg":    err.Error(),
+		})
+		return
+	}
+
 	var link models.Link
 	err = db.C(models.CollectionLink).
 		FindId(comment.ReferTo).
@@ -113,6 +125,8 @@ func CreateComment(c *gin.Context) {
 	comment.CreatedAt = time.Now()
 
 	comment.ID = bson.NewObjectId()
+	comment.Author.ID = userID
+	comment.Author.NickName = user.NickName
 
 	err = db.C(models.CollectionComment).Insert(comment)
 	if err != nil {

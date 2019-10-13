@@ -425,9 +425,9 @@ func AnonymousUser(c *gin.Context) {
 	}
 
 	type AnonymousUser struct {
-		Nickname string `json:"nickname" bson:"nickname"`
+		NickName string `json:"nickName" bson:"nickName"`
 	}
-	au := AnonymousUser{Nickname: idiom.Word}
+	au := AnonymousUser{NickName: idiom.Word}
 
 	c.JSON(http.StatusOK, gin.H{
 		"status": 0,
