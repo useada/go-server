@@ -18,7 +18,8 @@ func GetUserAPI(engine *gin.Engine) {
 	v1.Use(middleware.JWTAuth())
 
 	v1.GET("/user", handler.ListUser)
-	v1.GET("/user/:_id", handler.GetUser)
+	//v1.GET("/user/:_id", handler.GetUser)
+	v1.GET("/this-user", handler.GetThisUser)
 	//v1.GET("/email/:email", handler.GetEmail)
 
 	v1.Use(middleware.JWTAdmin())

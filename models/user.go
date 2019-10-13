@@ -17,6 +17,11 @@ const (
 	UserRoleChecked    = 2
 )
 
+type CaptchaData struct {
+	CaptchaID   string `json:"captchaID" bson:"captchaID"`
+	VerifyValue string `json:"verifyValue" bson:"verifyValue"`
+}
+
 // User model
 type User struct {
 	ID    bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`

@@ -8,6 +8,7 @@ import (
 	"serve/util"
 	"time"
 
+	"github.com/mojocn/base64Captcha"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
@@ -40,13 +41,14 @@ func ListUser(c *gin.Context) {
 }
 
 // Get a user
-func GetUser(c *gin.Context) {
-	db := c.MustGet("db").(*mgo.Database)
-	var user models.User
+func GetThisUser(c *gin.Context) {
+	claims := c.MustGet("claims").(*myjwt.CustomClaims)
+	userID := claims.ID
 
-	err := db.C(models.CollectionUser).
-		FindId(bson.ObjectIdHex(c.Param("_id"))).
-		One(&user)
+	db := c.MustGet("db").(*mgo.Database)
+
+	var user models.User
+	err := db.C(models.CollectionUser).FindId(userID).One(&user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": 500,
@@ -56,7 +58,7 @@ func GetUser(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"status": 200,
+		"status": 0,
 		"msg":    "Success",
 		"data":   user,
 	})
@@ -72,12 +74,22 @@ func CreateUser(c *gin.Context) {
 		Phone    string `json:"phone,omitempty" bson:"phone,omitempty"`
 		NickName string `json:"nickName,omitempty" binding:"required" bson:"nickName,omitempty"`
 		Profile  string `json:"profile,omitempty" bson:"profile,omitempty"`
+		models.CaptchaData
 	}
 	err := c.BindJSON(&userData)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": 500,
 			"msg":    err.Error(),
+		})
+		return
+	}
+
+	verifyResult := base64Captcha.VerifyCaptcha(userData.CaptchaID, userData.VerifyValue)
+	if !verifyResult {
+		c.JSON(http.StatusOK, gin.H{
+			"status": -1,
+			"msg":    "验证码错误",
 		})
 		return
 	}
@@ -333,12 +345,21 @@ func Login(c *gin.Context) {
 
 		if user.Password == "" || user.Password != loginReq.Password {
 			c.JSON(http.StatusOK, gin.H{
-				"status": -1,
-				"msg":    "Wrong Password!",
+				"status": 10001,
+				"msg":    "邮箱和密码不匹配，请重新输入",
 			})
-		} else {
-			generateToken(c, user)
+			return
 		}
+
+		if user.Role < models.UserRoleChecked {
+			c.JSON(http.StatusOK, gin.H{
+				"status": 10002,
+				"msg":    "请验证邮箱",
+			})
+			return
+		}
+
+		generateToken(c, user)
 	} else {
 		c.JSON(http.StatusOK, gin.H{
 			"status": -1,
@@ -372,12 +393,13 @@ func generateToken(c *gin.Context, user models.User) {
 		return
 	}
 
+	status := 0
 	data := LoginResult{
 		User:  user,
 		Token: token,
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"status": 0,
+		"status": status,
 		"msg":    "登录成功！",
 		"data":   data,
 	})
@@ -417,11 +439,18 @@ func AnonymousUser(c *gin.Context) {
 func CheckUser(c *gin.Context) {
 	db := c.MustGet("db").(*mgo.Database)
 
-	checkCode := c.Param("sn")
-	if checkCode == "" {
-		c.Redirect(http.StatusPermanentRedirect, "/sn/error")
+	var req struct {
+		SN string `json:"sn" bson:"sn"`
+	}
+
+	if c.BindJSON(&req) != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"status": 0,
+			"msg":    "无效验证码",
+		})
 		return
 	}
+	checkCode := req.SN
 
 	var user models.User
 	query := bson.M{
@@ -433,18 +462,27 @@ func CheckUser(c *gin.Context) {
 		One(&user)
 
 	if err != nil {
-		c.Redirect(http.StatusPermanentRedirect, "/sn/error")
+		c.JSON(http.StatusOK, gin.H{
+			"status": 0,
+			"msg":    "无效验证码",
+		})
 		return
 	}
 
 	err = db.C(models.CollectionUser).Update(bson.M{"_id": user.ID},
 		bson.M{"$set": bson.M{"role": models.UserRoleChecked}})
 	if err != nil {
-		c.Redirect(http.StatusPermanentRedirect, "/sn/error")
+		c.JSON(http.StatusOK, gin.H{
+			"status": 0,
+			"msg":    "无效验证码",
+		})
 		return
 	}
 
-	c.Redirect(http.StatusPermanentRedirect, "/user-profile")
+	c.JSON(http.StatusOK, gin.H{
+		"status": 0,
+		"msg":    "验证成功，<a href=\"/user-profile\">点击登录</a>",
+	})
 }
 
 // Login 登录

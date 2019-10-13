@@ -8,6 +8,7 @@ func RunHTTPServer(engine *gin.Engine) {
 	GetUserAPI(engine)
 	GetLinkAPI(engine)
 	GetCommentAPI(engine)
+	GetCaptchaAPI(engine)
 
 	//GetOrganizationAPI(engine)
 	//GetCustomerAPI(engine)

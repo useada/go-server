@@ -16,7 +16,8 @@ func SendRegisterMail(userMail, checkCode string) {
 	//邮件主题为"Hello"
 	subject := "趣链网注册验证"
 
-	url := "http://funny.link/" + checkCode
+	//url := "http://funny.link/rc?sn=" + checkCode
+	url := "http://localhost:8080/rc?sn=" + checkCode
 
 	// 邮件正文
 	body := "点击完成邮箱验证：" + url
@@ -34,7 +35,7 @@ func SendMail(mailTo []string, subject string, body string) error {
 	//定义邮箱服务器连接信息，如果是阿里邮箱 pass填密码，qq邮箱填授权码
 	mailConn := map[string]string{
 		"user": "funnylink@126.com",
-		"pass": "",
+		"pass": "ViRaH4r4yDEXLkrK",
 		"host": "smtp.126.com",
 		"port": "465",
 	}
