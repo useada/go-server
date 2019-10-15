@@ -336,9 +336,9 @@ func Login(c *gin.Context) {
 			One(&user)
 
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"status": 500,
-				"msg":    err.Error(),
+			c.JSON(http.StatusOK, gin.H{
+				"status": 403,
+				"msg":    "账号不存在",
 			})
 			return
 		}

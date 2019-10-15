@@ -30,3 +30,36 @@ type Link struct {
 	CreatedBy bson.ObjectId `json:"createdBy,omitempty" bson:"createdBy,omitempty"`
 	CreatedAt time.Time     `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
 }
+
+type ResultLink struct {
+	Link
+	ImgUrl string `json:"imgUrl"`
+	Liked  bool   `json:"liked"`
+}
+
+func LinkToResultLink(link *Link) *ResultLink {
+
+	resultLink := ResultLink{}
+	resultLink.Link = *link
+
+	if resultLink.Title == "" {
+		resultLink.Title = link.Name
+	}
+	if resultLink.Content == "" {
+		resultLink.Content = link.Desc
+	}
+
+	if resultLink.Author.NickName == "" {
+		resultLink.Author.NickName = "李白"
+	}
+
+	resultLink.ImgUrl = calcImgUrl(link.ImgName)
+	return &resultLink
+}
+
+func calcImgUrl(imgName string) string {
+	if imgName == "" {
+		return ""
+	}
+	return "http://static.d36.net/funnylink/links/image/png/" + imgName + "-small"
+}

@@ -14,16 +14,10 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// JWTAuth 中间件，检查token
-func JWTAuth() gin.HandlerFunc {
+func JWTPrepare() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.Request.Header.Get("Authorization")
 		if token == "" {
-			c.JSON(http.StatusOK, gin.H{
-				"status": 403,
-				"msg":    "无权限访问",
-			})
-			c.Abort()
 			return
 		}
 
@@ -33,23 +27,30 @@ func JWTAuth() gin.HandlerFunc {
 		// parseToken 解析token包含的信息
 		claims, err := j.ParseToken(token)
 		if err != nil {
-			if err == TokenExpired {
-				c.JSON(http.StatusOK, gin.H{
-					"status": 403,
-					"msg":    "授权已过期",
-				})
-				c.Abort()
-				return
-			}
-			c.JSON(http.StatusOK, gin.H{
-				"status": 403,
-				"msg":    err.Error(),
-			})
-			c.Abort()
 			return
 		}
 		// 继续交由下一个路由处理,并将解析出的信息传递下去
 		c.Set("claims", claims)
+	}
+}
+
+// JWTAuth 中间件，检查token
+func JWTAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		claimsI, ok := c.Get("claims")
+		var claims *CustomClaims
+		if ok {
+			claims = claimsI.(*CustomClaims)
+		}
+
+		if claims == nil {
+			c.JSON(http.StatusOK, gin.H{
+				"status": 403,
+				"msg":    "该功能需要登录才可以使用",
+			})
+			c.Abort()
+			return
+		}
 	}
 }
 
@@ -79,8 +80,8 @@ func JWTAdmin() gin.HandlerFunc {
 
 		if user.Role != models.UserRoleAdmin {
 			c.JSON(http.StatusForbidden, gin.H{
-				"status": -1,
-				"msg":    "没有管理权限",
+				"status": 403,
+				"msg":    "没有权限",
 			})
 
 			c.Abort()

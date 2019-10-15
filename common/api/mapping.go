@@ -9,6 +9,7 @@ import (
 
 func GetMappingAPI(engine *gin.Engine) {
 	v1 := engine.Group("/api/v1alpha1")
+	v1.Use(middleware.JWTPrepare())
 	v1.Use(middleware.JWTAuth())
 
 	v1.GET("/product/:_id/mapping", handler.ListMapping)

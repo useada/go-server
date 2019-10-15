@@ -10,15 +10,18 @@ import (
 func GetLinkAPI(engine *gin.Engine) {
 	v1 := engine.Group("/api/v1")
 
+	v1.Use(middleware.JWTPrepare())
+
 	v1.GET("/links", handler.GetLinks)
 	v1.GET("/link/:_id", handler.GetLink)
 	v1.POST("/open/link/:_id", handler.OpenLink)
 
 	v1.Use(middleware.JWTAuth())
-	v1.Use(middleware.JWTAdmin())
 
 	//v1.GET("/links", handler.ListLinks)
 	v1.PUT("/link", handler.CreateLink)
+
+	v1.Use(middleware.JWTAdmin())
 	v1.PUT("/links", handler.CreateLinks)
 	v1.POST("/link/:_id", handler.UpdateLink)
 	v1.DELETE("/link/:_id", handler.DeleteLink)

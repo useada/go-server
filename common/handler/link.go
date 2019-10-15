@@ -54,6 +54,22 @@ func GetLinks(c *gin.Context) {
 		"op":  op,
 	}).Debug("query")
 
+	var likedLinkList map[bson.ObjectId]bool
+	likedLinkList = make(map[bson.ObjectId]bool)
+
+	claimsI, ok := c.Get("claims")
+	if ok {
+		claims := claimsI.(*myjwt.CustomClaims)
+		userID := claims.ID
+
+		like, err := models.GetLikeByUserID(db, userID)
+		if err == nil && like != nil {
+			for _, v := range like.LinkList {
+				likedLinkList[v] = true
+			}
+		}
+	}
+
 	query := bson.M{}
 	if tag != "" {
 		query = bson.M{
@@ -89,26 +105,15 @@ func GetLinks(c *gin.Context) {
 		return
 	}
 
-	resultLinks := make([]ResultLink, 0)
+	resultLinks := make([]models.ResultLink, 0)
 
 	for _, v := range links {
-		resultLink := ResultLink{}
-		resultLink.Link = v
-
-		if resultLink.Title == "" {
-			resultLink.Title = v.Name
-		}
-		if resultLink.Content == "" {
-			resultLink.Content = v.Desc
+		resultLink := models.LinkToResultLink(&v)
+		if _, ok := likedLinkList[v.ID]; ok {
+			resultLink.Liked = true
 		}
 
-		if resultLink.Author.NickName == "" {
-			resultLink.Author.NickName = "李白"
-		}
-
-		resultLink.ImgUrl = calcImgUrl(v.ImgName)
-
-		resultLinks = append(resultLinks, resultLink)
+		resultLinks = append(resultLinks, *resultLink)
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -159,22 +164,12 @@ func GetLink(c *gin.Context) {
 		return
 	}
 
-	resultLink := ResultLink{}
-	resultLink.Link = link
-
-	if resultLink.Title == "" {
-		resultLink.Title = link.Name
-	}
-	if resultLink.Content == "" {
-		resultLink.Content = link.Desc
-	}
-
-	resultLink.ImgUrl = calcImgUrl(link.ImgName)
+	resultLink := models.LinkToResultLink(&link)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status": 0,
 		"msg":    "Success",
-		"data":   resultLink,
+		"data":   *resultLink,
 	})
 }
 
@@ -361,16 +356,4 @@ func OpenLink(c *gin.Context) {
 		"status": 0,
 		"msg":    "Success",
 	})
-}
-
-type ResultLink struct {
-	models.Link
-	ImgUrl string `json:"imgUrl"`
-}
-
-func calcImgUrl(imgName string) string {
-	if imgName == "" {
-		return ""
-	}
-	return "http://static.d36.net/funnylink/links/image/png/" + imgName + "-small"
 }

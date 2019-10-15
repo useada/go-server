@@ -15,6 +15,7 @@ func GetUserAPI(engine *gin.Engine) {
 	v1.POST("/check-code/send", handler.SendCheckCode)
 	v1.GET("/anon-user", handler.AnonymousUser)
 
+	v1.Use(middleware.JWTPrepare())
 	v1.Use(middleware.JWTAuth())
 
 	v1.GET("/user", handler.ListUser)

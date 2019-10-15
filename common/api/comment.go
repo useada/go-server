@@ -10,6 +10,8 @@ import (
 func GetCommentAPI(engine *gin.Engine) {
 	v1 := engine.Group("/api/v1")
 
+	v1.Use(middleware.JWTPrepare())
+
 	v1.GET("/comments", handler.GetComments)
 
 	v1.Use(middleware.JWTAuth())
