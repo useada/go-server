@@ -16,11 +16,11 @@ func SendRegisterMail(userMail, checkCode string) {
 	//邮件主题为"Hello"
 	subject := "趣链网注册验证"
 
-	//url := "http://funny.link/rc?sn=" + checkCode
-	url := "http://localhost:8080/rc?sn=" + checkCode
+	url := "http://funny.link/rc?sn=" + checkCode
+	//url := "http://localhost:8080/rc?sn=" + checkCode
 
 	// 邮件正文
-	body := "点击完成邮箱验证：" + url
+	body := "在浏览器里打开链接完成邮箱验证：" + url
 
 	SendMail(mailTo, subject, body)
 }
