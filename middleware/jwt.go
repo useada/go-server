@@ -46,7 +46,7 @@ func JWTAuth() gin.HandlerFunc {
 		if claims == nil {
 			c.JSON(http.StatusOK, gin.H{
 				"status": 403,
-				"msg":    "该功能需要登录才可以使用",
+				"msg":    "请重新登录",
 			})
 			c.Abort()
 			return
@@ -101,7 +101,7 @@ var (
 	TokenNotValidYet error  = errors.New("Token not active yet")
 	TokenMalformed   error  = errors.New("That's not even a token")
 	TokenInvalid     error  = errors.New("Couldn't handle this token:")
-	SignKey          string = "FogDong"
+	SignKey          string = "funnylink.net-sk-2019"
 )
 
 // 载荷，可以加一些自己需要的信息
@@ -127,6 +127,10 @@ func GetSignKey() string {
 func SetSignKey(key string) string {
 	SignKey = key
 	return SignKey
+}
+
+func ExpiresAt() int64 {
+	return time.Now().Add(24 * time.Hour).Unix()
 }
 
 // CreateToken 生成一个token
@@ -174,7 +178,8 @@ func (j *JWT) RefreshToken(tokenString string) (string, error) {
 	}
 	if claims, ok := token.Claims.(*CustomClaims); ok && token.Valid {
 		jwt.TimeFunc = time.Now
-		claims.StandardClaims.ExpiresAt = time.Now().Add(1 * time.Hour).Unix()
+		//claims.StandardClaims.ExpiresAt = time.Now().Add(1 * time.Hour).Unix()
+		claims.StandardClaims.ExpiresAt = ExpiresAt()
 		return j.CreateToken(*claims)
 	}
 	return "", TokenInvalid

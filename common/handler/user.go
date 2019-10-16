@@ -371,15 +371,14 @@ func Login(c *gin.Context) {
 // 生成令牌
 func generateToken(c *gin.Context, user models.User) {
 	j := &myjwt.JWT{
-		SigningKey: []byte("FogDong"),
+		SigningKey: []byte(myjwt.GetSignKey()),
 	}
 	claims := myjwt.CustomClaims{
 		ID: user.ID,
-		//user.Email,
 		StandardClaims: jwtgo.StandardClaims{
 			NotBefore: int64(time.Now().Unix() - 1000), // 签名生效时间
-			ExpiresAt: int64(time.Now().Unix() + 3600), // 过期时间 一小时
-			Issuer:    "FogDong",                       //签名的发行者
+			ExpiresAt: myjwt.ExpiresAt(),               // 过期时间
+			Issuer:    "funnylink.net",                 //签名的发行者
 		},
 	}
 
